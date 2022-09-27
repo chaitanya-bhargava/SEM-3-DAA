@@ -4,17 +4,17 @@
 using namespace std;
 void heapify(vector<string> *arr, int n, int m)
 {
-    int largest=m;
-    int left=2*m+1;
-    int right=2*m+2;
-    if (left < n && (*arr)[left] > (*arr)[largest])
-        largest = left;
-    if (right < n && (*arr)[right] > (*arr)[largest])
-        largest = right;
-    if (largest != m)
+    int max=m;
+    int l=2*m+1;
+    int r=2*m+2;
+    if (l < n && (*arr)[l] > (*arr)[max])
+        max = l;
+    if (r < n && (*arr)[r] > (*arr)[max])
+        max = r;
+    if (max != m)
     {
-        (*arr)[m].swap((*arr)[largest]);
-        heapify(arr, n, largest);
+        (*arr)[m].swap((*arr)[max]);
+        heapify(arr, n, max);
     }
 }
 
