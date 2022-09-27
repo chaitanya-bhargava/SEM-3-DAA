@@ -27,7 +27,7 @@ int countSort(int *arr, int n, int max)
     for (int i = 0; i < n; i++)
     {
         newArr[count[arr[i]] - 1] = arr[i];
-        --count[arr[i]];
+        count[arr[i]]--;
     }
     for (int i = 0; i < n; i++)
     {
