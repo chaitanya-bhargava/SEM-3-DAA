@@ -3,9 +3,9 @@
 #include<math.h>
 using namespace std;
 
-void displayMatrix(vector<vector<int>> M){
-    for(int i=0;i<M.size();i++){
-        for(int j=0;j<M[i].size();j++){
+void displayMatrix(vector<vector<int>> M,int rows,int columns){
+    for(int i=0;i<rows;i++){
+        for(int j=0;j<columns;j++){
             cout<<M[i][j]<<" ";
         }
         cout<<endl;
@@ -142,12 +142,9 @@ int main(){
     int pos=ceil(log2(max));
     int p=pow(2,pos);
     A=addZeroes(A,p);
-    // displayMatrix(A);
     B=addZeroes(B,p);
-    // cout<<endl;
-    // displayMatrix(B);
     cout<<endl;
     vector<vector<int>> C=multiplyMatrix(A,B);
-    displayMatrix(C);
+    displayMatrix(C,norowsa,nocolumnsb);
     return 0;
 }
