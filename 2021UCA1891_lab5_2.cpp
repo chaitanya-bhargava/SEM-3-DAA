@@ -1,8 +1,14 @@
+/*"I have done this assignment on my own. I have not copied any code from
+another student or any online source. I understand if my code is found
+similar to somebody else's code, my case can be sent to the Disciplinary
+committee of the institute for appropriate action."*/
+
 #include<iostream>
 #include<vector>
 #include<math.h>
 using namespace std;
 
+//function to display a matrix
 void displayMatrix(vector<vector<int>> M,int rows,int columns){
     for(int i=0;i<rows;i++){
         for(int j=0;j<columns;j++){
@@ -12,6 +18,7 @@ void displayMatrix(vector<vector<int>> M,int rows,int columns){
     }
 }
 
+//function to add zeroes according to the order given
 vector<vector<int>> addZeroes(vector<vector<int>> A,int n){
     vector<int> row(n,0);
     int len=A.size();
@@ -27,6 +34,7 @@ vector<vector<int>> addZeroes(vector<vector<int>> A,int n){
     return A;
 }
 
+//function to add 2 matrices
 vector<vector<int>> addMatrix(vector<vector<int>> A,vector<vector<int>> B){
     vector<int> row(A.size(),0);
     vector<vector<int>> result(A.size(),row);
@@ -38,15 +46,22 @@ vector<vector<int>> addMatrix(vector<vector<int>> A,vector<vector<int>> B){
     return result;
 }
 
+//function to multiply matrices recursively
 vector<vector<int>> multiplyMatrix(vector<vector<int>> A,vector<vector<int>> B){
+    //initialise a result array with all elements 0
     vector<int> rowres(A.size(),0);
     vector<vector<int>> result(A.size(),rowres);
+
+    //multiply manually if array size is 1x1
     if(A.size()==1 && B.size()==1){
         result[0][0]=A[0][0]*B[0][0];
         return result;
     }
+
     int mid=A.size()/2;
     vector<int> row(mid,0);
+
+    //split both arrays into 4 halves
     vector<vector<int>> a00(mid,row);
     vector<vector<int>> a01(mid,row);
     vector<vector<int>> a10(mid,row);
@@ -67,10 +82,15 @@ vector<vector<int>> multiplyMatrix(vector<vector<int>> A,vector<vector<int>> B){
             b11[i][j]=B[i+mid][j+mid];
         }
     }
+
+    //multiply and add the matrices
+    //then store them into 4 result matrices correspondingly
     vector<vector<int>> res00=addMatrix(multiplyMatrix(a00,b00),multiplyMatrix(a01,b10));
     vector<vector<int>> res01=addMatrix(multiplyMatrix(a00,b01),multiplyMatrix(a01,b11));
     vector<vector<int>> res10=addMatrix(multiplyMatrix(a10,b00),multiplyMatrix(a11,b10));
     vector<vector<int>> res11=addMatrix(multiplyMatrix(a10,b01),multiplyMatrix(a11,b11));
+    
+    //combine the 4 smaller result matrices into one
     for(int i=0;i<mid;i++){
         for(int j=0;j<mid;j++){
             result[i][j]=res00[i][j];
@@ -93,6 +113,8 @@ int main(){
     cin>>norowsb;
     cout<<"Enter no. of columns in B:"<<endl;
     cin>>nocolumnsb;
+
+    //matrix cannot be multiplied if columns of A are not equal to rows of B
     if(nocolumnsa!=norowsb){
         cout<<"Matrix cannot be multiplied"<<endl;
         exit(1);
@@ -119,6 +141,8 @@ int main(){
         }
         B.push_back(row);
     }
+
+    //finding max value among rows of A,B and columns of A,B
     int max1;
     if(norowsa>norowsb){
         max1=norowsa;
@@ -139,12 +163,17 @@ int main(){
     else{
         max=max2;
     }
+
+    //calculating closest power of 2 greater than the max value
     int pos=ceil(log2(max));
     int p=pow(2,pos);
+
+    //adding zeroes to both matrix to make them square matrix of order which is power of 2
     A=addZeroes(A,p);
     B=addZeroes(B,p);
     cout<<endl;
     vector<vector<int>> C=multiplyMatrix(A,B);
+    cout<<"Multiplied matrix is:"<<endl;
     displayMatrix(C,norowsa,nocolumnsb);
     return 0;
 }
