@@ -5,6 +5,7 @@ committee of the institute for appropriate action."*/
 
 #include <iostream>
 #include<math.h>
+#include<float.h>
 #include<vector>
 using namespace std;
 
@@ -12,7 +13,7 @@ using namespace std;
 class Boat 
 { 
     public:
-    int x, y;
+    float x, y;
     Boat(){
         x=0;
         y=0;
@@ -53,13 +54,13 @@ void sortY(vector<Boat>& Boats){
 }
 
 //function to calculate distance
-int manhattanDist(Boat p1, Boat p2) 
+float manhattanDist(Boat p1, Boat p2) 
 { 
     return abs(p1.x-p2.x)+abs(p1.y-p2.y); 
 } 
 
 //function to find minumum of two numbers   
-int min(int x, int y) 
+float min(int x, int y) 
 { 
     if(x>y){
         return y;
@@ -70,9 +71,9 @@ int min(int x, int y)
 } 
 
 //function to find closest pair between two halves(less than d) 
-int stripPair(vector<Boat> strip) 
+float stripPair(vector<Boat> strip) 
 { 
-    int min = INT_MAX; 
+    float min = FLT_MAX; 
     sortY(strip); 
     for (int i = 0; i < strip.size(); ++i) 
         for (int j = i+1; j < strip.size() && (strip[j].y - strip[i].y) < min; ++j) 
@@ -83,12 +84,12 @@ int stripPair(vector<Boat> strip)
 } 
 
 //main recursive function
-int closestPair(vector<Boat> Boats) 
+float closestPair(vector<Boat> Boats) 
 {  
     int n=Boats.size();
     //when no. of boats is just 3 we calculate minimum manually
     if (n <= 3){
-        int min=INT_MAX;
+        float min=FLT_MAX;
         for(int i=0;i<n;i++){
             for(int j=i+1;j<n;j++){
                 if(manhattanDist(Boats[i],Boats[j])<min){
@@ -108,15 +109,15 @@ int closestPair(vector<Boat> Boats)
         left.push_back(Boats[i]);
         right.push_back(Boats[i+mid]);
     } 
-    int dl = closestPair(left); 
-    int dr = closestPair(right);  
-    int d = min(dl, dr);  
+    float dl = closestPair(left); 
+    float dr = closestPair(right);  
+    float d = min(dl, dr);  
     vector<Boat> strip;  
     for (int i = 0; i < n; i++) 
         if (abs(Boats[i].x - midBoat.x) < d){ 
             strip.push_back(Boats[i]);
         } 
-    int s=stripPair(strip); 
+    float s=stripPair(strip); 
     return min(d,s); 
 } 
   
