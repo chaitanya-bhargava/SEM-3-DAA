@@ -60,7 +60,7 @@ float manhattanDist(Boat p1, Boat p2)
 } 
 
 //function to find minumum of two numbers   
-float min(int x, int y) 
+float min(float x, float y) 
 { 
     if(x>y){
         return y;
