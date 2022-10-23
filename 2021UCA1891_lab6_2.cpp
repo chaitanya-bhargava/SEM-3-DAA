@@ -2,25 +2,31 @@
 #include<vector>
 using namespace std;
 
+//function to return subarray vector
 vector<int> subArray(vector<int> weather,int m,int &bestSum){
     if(m>weather.size()){
         cout<<"Subarray cannot be greater than main array";
         exit(1);
     }
+
+    //calculate sum of first m elements and store in bestsum
     int sum=0;
     for(int i=0;i<m;i++){
         sum+=weather[i];
     }
     bestSum=sum;
     int index=0;
+    //remove one element and add another then calculate sum
     for(int i=0;i<weather.size()-m;i++){
         sum=sum-weather[i];
         sum=sum+weather[i+m];
+        //if new sum is greater make it bestsum and store starting index
         if(sum>bestSum){
             bestSum=sum;
             index=i+1;
         }
     }
+    //make subarray
     vector<int> subarray(m);
     int j=0;
     for(int i=index;i<index+m;i++){

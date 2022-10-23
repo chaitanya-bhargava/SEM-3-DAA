@@ -2,6 +2,7 @@
 #include<vector>
 using namespace std;
 
+// calculate min
 int minelem(int x, int y) 
 { 
     if(x>y){
@@ -12,6 +13,7 @@ int minelem(int x, int y)
     } 
 }
 
+//calculate max
 int maxelem(int x, int y) 
 { 
     if(x<y){
@@ -22,12 +24,15 @@ int maxelem(int x, int y)
     } 
 } 
 
+//function to calculate max and min 
 void maxminbp(vector<int> bp,int &max,int &min,int low,int high){
+    //if only one element
     if(low==high){
         max=bp[low];
         min=bp[low];
         return;
     }
+    //if 2 elements
     if(low==high-1){
         max=maxelem(bp[low],bp[high]);
         min=minelem(bp[low],bp[high]);
@@ -38,10 +43,10 @@ void maxminbp(vector<int> bp,int &max,int &min,int low,int high){
     int maxleft;
     int minright;
     int maxright;
-    maxminbp(bp,maxleft,minleft,low,mid);
-    maxminbp(bp,maxright,minright,mid+1,high);
-    max=maxelem(maxleft,maxright);
-    min=minelem(minleft,minright);
+    maxminbp(bp,maxleft,minleft,low,mid); //calculate max and min from left half
+    maxminbp(bp,maxright,minright,mid+1,high); //calculate max and min from right half
+    max=maxelem(maxleft,maxright); //store max between left and right
+    min=minelem(minleft,minright); //store min between left and right
 }
 
 int main(){
